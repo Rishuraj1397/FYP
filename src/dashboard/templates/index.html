@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Event Intelligence & Market Impact Analysis | Group 61</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="top-nav">
+        <div class="logo-area">
+            <div class="pulse-indicator"></div>
+            <div>
+                <h1>AI-Powered Multi-Source Event Intelligence & Market Impact Analysis</h1>
+                <p class="subtitle">System Architecture Execution Platform &bull; <strong>Group No. 61: Rishu Raj &amp; Shaheed Arman Gazi</strong></p>
+            </div>
+        </div>
+        <div class="nav-actions">
+            <button id="runPipelineBtn" class="btn btn-primary">
+                <span class="icon">⚡</span> Run Full Pipeline Ingestion
+            </button>
+            <span id="pipelineStatus" class="status-badge status-ready">Pipeline Active</span>
+        </div>
+    </header>
+
+    <div class="pipeline-tracker">
+        <div class="step-card active" data-step="1">
+            <span class="step-num">Task 1</span>
+            <span class="step-label">Ingestion & Preprocessing</span>
+        </div>
+        <div class="step-arrow">&rarr;</div>
+        <div class="step-card active" data-step="2">
+            <span class="step-num">Task 2</span>
+            <span class="step-label">NLP Event Intelligence</span>
+        </div>
+        <div class="step-arrow">&rarr;</div>
+        <div class="step-card active" data-step="3">
+            <span class="step-num">Task 3</span>
+            <span class="step-label">Knowledge Graph</span>
+        </div>
+        <div class="step-arrow">&rarr;</div>
+        <div class="step-card active" data-step="4">
+            <span class="step-num">Task 4</span>
+            <span class="step-label">Market Impact Analysis</span>
+        </div>
+        <div class="step-arrow">&rarr;</div>
+        <div class="step-card active" data-step="5">
+            <span class="step-num">Task 5</span>
+            <span class="step-label">AI Brief & HITL</span>
+        </div>
+    </div>
+
+    <main class="dashboard-container">
+        <!-- Sidebar: Event Feed -->
+        <aside class="sidebar-feed">
+            <div class="sidebar-header">
+                <h2>Event Feed</h2>
+                <span id="eventCountBadge" class="badge-pill">0 Events</span>
+            </div>
+            <div id="eventsList" class="events-list">
+                <div class="loading-spinner">Loading event intelligence stream...</div>
+            </div>
+        </aside>
+
+        <!-- Main Content Workspace -->
+        <section class="main-workspace">
+            <div class="workspace-tabs">
+                <button class="tab-btn active" data-tab="tab-brief">📑 AI Market Brief</button>
+                <button class="tab-btn" data-tab="tab-graph">🕸️ Knowledge Graph</button>
+                <button class="tab-btn" data-tab="tab-market">📈 Market Reaction & CAR</button>
+                <button class="tab-btn" data-tab="tab-cascade">⏱️ Cascade & Replay</button>
+                <button class="tab-btn" data-tab="tab-validation">🛡️ Human-in-the-Loop</button>
+            </div>
+
+            <!-- Tab 1: AI Market Brief -->
+            <div id="tab-brief" class="tab-pane active">
+                <div id="briefContainer" class="brief-wrapper">
+                    <div class="empty-state">Select an event from the feed to view its evidence-grounded AI Market Brief.</div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Knowledge Graph -->
+            <div id="tab-graph" class="tab-pane">
+                <div class="graph-panel-header">
+                    <h3>Event-to-Market Relationship Graph (<span id="graphNodeCount">0</span> nodes, <span id="graphEdgeCount">0</span> edges)</h3>
+                    <div class="graph-legend">
+                        <span class="legend-item"><span class="dot dot-event"></span> Event</span>
+                        <span class="legend-item"><span class="dot dot-entity"></span> Entity</span>
+                        <span class="legend-item"><span class="dot dot-sector"></span> Sector</span>
+                        <span class="legend-item"><span class="dot dot-asset"></span> Asset</span>
+                    </div>
+                </div>
+                <div id="graphCanvasWrapper" class="graph-canvas-container">
+                    <canvas id="kgCanvas" width="900" height="520"></canvas>
+                </div>
+            </div>
+
+            <!-- Tab 3: Market Reaction & CAR -->
+            <div id="tab-market" class="tab-pane">
+                <div class="market-metrics-grid" id="marketMetricsGrid">
+                </div>
+                <div class="market-details-split">
+                    <div class="card spillover-card">
+                        <h3>Sector & Spillover Transmission</h3>
+                        <div id="spilloverContent"></div>
+                    </div>
+                    <div class="card historical-card">
+                        <h3>Historical Precedent Analogies</h3>
+                        <div id="analogiesContent"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 4: Cascade & Replay -->
+            <div id="tab-cascade" class="tab-pane">
+                <div class="card cascade-card">
+                    <h3>Information Cascade & Timeline Reconstruction</h3>
+                    <p class="section-desc">Tracks transmission velocity from initial regulatory dispatch to order-book shock.</p>
+                    <div id="cascadeTimeline" class="timeline-container"></div>
+                </div>
+            </div>
+
+            <!-- Tab 5: Human-in-the-Loop Validation -->
+            <div id="tab-validation" class="tab-pane">
+                <div class="card hitl-card">
+                    <h3>Human-in-the-Loop Validation Console</h3>
+                    <p class="section-desc">Verify or adjust event classification, sentiment polarity, and relationship edges. Feedback triggers automated retraining loops.</p>
+                    
+                    <form id="hitlForm" class="hitl-form">
+                        <input type="hidden" id="hitlTargetId" name="target_id">
+                        
+                        <div class="form-row">
+                            <label>Target Event ID</label>
+                            <input type="text" id="hitlEventDisplay" readonly class="input-readonly">
+                        </div>
+
+                        <div class="form-grid-2">
+                            <div class="form-group">
+                                <label>Review Status</label>
+                                <select id="hitlStatus" class="form-select">
+                                    <option value="APPROVED">APPROVED (Verified Accurate)</option>
+                                    <option value="MODIFIED">MODIFIED (Apply Corrections)</option>
+                                    <option value="REJECTED">REJECTED (False Detection / Noise)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Adjust Category</label>
+                                <select id="hitlCategory" class="form-select">
+                                    <option value="">Keep Detected Category</option>
+                                    <option value="CENTRAL_BANK_POLICY">CENTRAL_BANK_POLICY</option>
+                                    <option value="GEOPOLITICAL_SANCTIONS">GEOPOLITICAL_SANCTIONS</option>
+                                    <option value="SUPPLY_CHAIN">SUPPLY_CHAIN</option>
+                                    <option value="EARNINGS">EARNINGS</option>
+                                    <option value="MERGERS_ACQUISITIONS">MERGERS_ACQUISITIONS</option>
+                                    <option value="REGULATORY_LEGAL">REGULATORY_LEGAL</option>
+                                    <option value="MACRO_ECONOMIC">MACRO_ECONOMIC</option>
+                                    <option value="EXECUTIVE_LEADERSHIP">EXECUTIVE_LEADERSHIP</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-grid-2">
+                            <div class="form-group">
+                                <label>Adjust Sentiment Polarity</label>
+                                <select id="hitlSentiment" class="form-select">
+                                    <option value="">Keep Detected Sentiment</option>
+                                    <option value="BULLISH">BULLISH</option>
+                                    <option value="BEARISH">BEARISH</option>
+                                    <option value="NEUTRAL">NEUTRAL</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Reviewer Identity</label>
+                                <input type="text" id="hitlReviewer" value="Lead Quantitative Analyst" class="form-input">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Analyst Rationale / Verification Notes</label>
+                            <textarea id="hitlNotes" rows="3" class="form-textarea" placeholder="Explain the rationale for this verification or adjustment..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-success">Submit Validation &amp; Trigger Feedback Loop</button>
+                    </form>
+
+                    <div class="hitl-history-section">
+                        <h4>Validation Audit Trail</h4>
+                        <div id="hitlHistoryList" class="hitl-history-list"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <p>AI-Powered Multi-Source Event Intelligence &amp; Market Impact Analysis &bull; Final Year Capstone &bull; <strong>Group No. 61 | Rishu Raj | Shaheed Arman Gazi</strong></p>
+    </footer>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
+
